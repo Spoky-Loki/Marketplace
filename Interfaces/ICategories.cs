@@ -2,7 +2,7 @@
 
 namespace Shop.Interfaces
 {
-    public interface IDrinksCategory
+    public interface ICategories
     {
         IEnumerable<Category> categories { get; }
     }

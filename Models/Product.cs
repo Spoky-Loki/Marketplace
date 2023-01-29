@@ -1,6 +1,6 @@
 ﻿namespace Shop.Models
 {
-    public class Drink
+    public class Product
     {
         public int id { get; set; }
 
@@ -16,9 +16,9 @@
         
         public bool isFavourite { get; set; }
 
-        public int available { get; set; }
+        public bool available { get; set; }
 
-        public int categotyId { get; set; }
+        public int categoryId { get; set; }
 
         public virtual Category Category { get; set; }
     }

@@ -8,6 +8,6 @@
 
         public string categoryDescription { get; set; }
 
-        public List<Drink> drinks { get; set; }
+        public List<Product> products { get; set; }
     }
 }
