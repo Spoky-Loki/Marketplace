@@ -1,7 +1,7 @@
-﻿using Shop.Interfaces;
+﻿using Shop.Data.Interfaces;
 using Shop.Models;
 
-namespace Shop.Mocks
+namespace Shop.Data.Mocks
 {
     public class MockCategory : ICategories
     {
@@ -13,7 +13,7 @@ namespace Shop.Mocks
                 {
                     new Category{ categoryName = "Алкогольные напитки",
                         categoryDescription = "Напитки содержащие алкоголь 18+"},
-                    new Category { categoryName = "Безалкогольные напитки", 
+                    new Category { categoryName = "Безалкогольные напитки",
                         categoryDescription = "Напитки не содержащие алкоголь"},
                     new Category { categoryName = "Молочные продукты",
                         categoryDescription = "Молокосодержащие продукты"}

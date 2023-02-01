@@ -1,7 +1,14 @@
+using Shop.Data.Interfaces;
+using Shop.Data.Mocks;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//Interfaces and realisation
+builder.Services.AddTransient<ICategories, MockCategory>();
+builder.Services.AddTransient<IProducts, MockProduct>();
 
 var app = builder.Build();
 
@@ -20,6 +27,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+//Exception
 app.UseDeveloperExceptionPage();
 app.UseStatusCodePages();
 

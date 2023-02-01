@@ -1,6 +1,6 @@
 ﻿using Shop.Models;
 
-namespace Shop.Interfaces
+namespace Shop.Data.Interfaces
 {
     public interface IProducts
     {

@@ -1,0 +1,11 @@
+﻿<h1>Продукты</h1>
+<h3>@Model.currentCategory</h3>
+@{
+	foreach(var product in Model.products)
+	{
+		<div>
+			<h2>Продукт: @product.name</h2>
+			<p>Цена: @product.price.ToString("c")</p>
+		</div>
+	}
+}
