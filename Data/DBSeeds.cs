@@ -16,7 +16,7 @@ namespace Shop.Data
 			context.SaveChanges();
 		}
 
-		private  static Dictionary<String, Category> category;
+		private  static Dictionary<String, Category>? category;
 
 		public static Dictionary<String, Category> Categories
 		{
@@ -45,7 +45,7 @@ namespace Shop.Data
 			}
 		}
 
-		private static Dictionary<String, Product> products;
+		private static Dictionary<String, Product>? products;
 
 		public static Dictionary<String, Product> Products
 		{

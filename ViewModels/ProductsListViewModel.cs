@@ -6,7 +6,5 @@ namespace Shop.ViewModels
 	{
 		public IEnumerable<Product> products { get; set; }
 		public string currentCategory { get; set; }
-
-
 	}
 }
