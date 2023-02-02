@@ -1,4 +1,8 @@
-﻿@model CartViewModel
+﻿@{
+    ViewData["Title"] = "Корзина";
+}
+
+@model CartViewModel
 
 <div class="container">
 	@foreach (var el in Model.cart.cartItems)

@@ -17,7 +17,7 @@ namespace Shop.Controllers
 
         public ViewResult list() 
         {
-            ViewBag.Title = "Страница с продуктами";
+            ViewBag.Title = "Продукты";
 
             ProductsListViewModel model = new ProductsListViewModel();
             model.products = _products.products;

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shop.Data.Interfaces;
 using Shop.Models;
+using Shop.ViewModels;
 using System.Diagnostics;
 
 namespace Shop.Controllers
@@ -8,14 +10,19 @@ namespace Shop.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+		private readonly IProducts _product;
+
+		public HomeController(ILogger<HomeController> logger, IProducts product)
         {
             _logger = logger;
-        }
+			_product = product;
+		}
 
         public IActionResult Index()
         {
-            return View();
+            var homeProducts = new HomeViewModel{ favouriteProducts = _product.favouriteProducts };
+
+            return View(homeProducts);
         }
 
         public IActionResult Privacy()
