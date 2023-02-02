@@ -6,7 +6,7 @@ namespace Shop.Data.Interfaces
     {
         IEnumerable<Product> products { get; }
 
-        IEnumerable<Product> favouriteProducts { get; set; }
+        IEnumerable<Product> favouriteProducts { get; }
 
         Product GetProduct(int id);
     }

@@ -1,14 +1,22 @@
+using Microsoft.EntityFrameworkCore;
+using Shop.Data;
 using Shop.Data.Interfaces;
-using Shop.Data.Mocks;
+using Shop.Data.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// getting the connection string from the configuration file
+string connection = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Adding the ApplicationContext context as a service to the application
+builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 //Interfaces and realisation
-builder.Services.AddTransient<ICategories, MockCategory>();
-builder.Services.AddTransient<IProducts, MockProduct>();
+builder.Services.AddTransient<ICategories, CategoryRepository>();
+builder.Services.AddTransient<IProducts, ProductRepository>();
 
 var app = builder.Build();
 
@@ -34,5 +42,11 @@ app.UseStatusCodePages();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+using(var scope = app.Services.CreateScope())
+{
+	ApplicationContext context = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
+	DBSeeds.initial(context);
+}
 
 app.Run();
