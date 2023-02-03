@@ -28,6 +28,7 @@ builder.Services.AddControllersWithViews();
 // Interfaces and realisation
 builder.Services.AddTransient<ICategories, CategoryRepository>();
 builder.Services.AddTransient<IProducts, ProductRepository>();
+builder.Services.AddTransient<IAllOrders, OrdersRepository>();
 
 var app = builder.Build();
 

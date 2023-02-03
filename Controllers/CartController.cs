@@ -28,7 +28,7 @@ namespace Shop.Controllers
 			return View(obj);
 		}
 
-		public RedirectToActionResult addToCart(int id)
+		public RedirectToActionResult AddToCart(int id)
 		{
 			var item = _product.products.FirstOrDefault(i => i.id == id);
 
