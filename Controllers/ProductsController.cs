@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Shop.Data.Interfaces;
+using Shop.Models;
 using Shop.ViewModels;
 
 namespace Shop.Controllers
@@ -15,13 +17,41 @@ namespace Shop.Controllers
             this._categories = categories;
         }
 
-        public ViewResult list() 
+        [Route("Products/List")]
+		[Route("Products/List/{category}")]
+		public ViewResult List(string category)
         {
-            ViewBag.Title = "Продукты";
+            IEnumerable<Product>? products = null;
+            string productCategory = "";
+            if (category.IsNullOrEmpty())
+            {
+                products = _products.products.OrderBy(i => i.id);
+            }
+            else
+            {
+                if (category.Equals("alcoholic", StringComparison.OrdinalIgnoreCase))
+                {
+                    products = _products.products.Where(p => p.Category.categoryName.Equals("Алкогольные напитки")).
+                        OrderBy(i => i.id);
+					productCategory = "Алкогольные напитки";
+				}
+                else if (category.Equals("noAlcoholic", StringComparison.OrdinalIgnoreCase))
+                {
+                    products = _products.products.Where(p => p.Category.categoryName.Equals("Безалкогольные напитки")).
+                        OrderBy(i => i.id);
+                    productCategory = "Безалкогольные напитки";
+				}
+                else if (category.Equals("milk", StringComparison.OrdinalIgnoreCase))
+                {
+                    products = _products.products.Where(p => p.Category.categoryName.Equals("Молочные продукты")).
+                        OrderBy(i => i.id);
+					productCategory = "Молочные продукты";
+				}
+            }
 
-            ProductsListViewModel model = new ProductsListViewModel();
-            model.products = _products.products;
-            model.currentCategory = "Категория";
+            ProductsListViewModel model = new ProductsListViewModel {
+                products = products,
+                currentCategory = productCategory};
 
             return View(model);
         }

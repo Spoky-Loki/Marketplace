@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data;
@@ -52,10 +53,15 @@ app.UseStatusCodePages();
 app.UseSession();
 
 app.MapControllerRoute(
+	name: "categoryFilter",
+	pattern: "Products/List/{*category}",
+	defaults: new { controller = "Products", action = "List" });
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-using(var scope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
 	ApplicationContext context = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
 	DBSeeds.initial(context);
