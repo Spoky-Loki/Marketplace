@@ -19,6 +19,7 @@ namespace Shop.Data.Repository
 		{
 			order.orderTime = DateTime.Now;
 			_context.orders.Add(order);
+			_context.SaveChanges();
 
 			var products = _cart.cartItems;
 			foreach (var product in products)
