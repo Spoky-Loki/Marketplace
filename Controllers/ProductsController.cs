@@ -56,6 +56,11 @@ namespace Shop.Controllers
             return View(model);
         }
 
+		public ViewResult Detail(int id)
+        {
+			var item = _products.products.FirstOrDefault(i => i.id == id);
 
-    }
+			return View(item);
+        }
+	}
 }

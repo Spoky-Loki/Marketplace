@@ -1,9 +1,15 @@
 ﻿@model Product
 
-<div class="col-lg-4">
+@{
+	ViewData["Title"] = Model.name;
+}
+
+<div class="col-lg-5">
 	<img class="img-thumbnail" src="@Model.image" alt="@Model.name" />
 	<h2>Продукт: @Model.name</h2>
-	<p>@Model.shortDescription</p>
+	<p>Категория: @Model.Category.categoryName</p>
+	<p>Описание: @Model.shortDescription</p>
+	<p>@Model.longDescription</p>
 	<p class="text-uppercase fw-bold">Цена: @Model.price.ToString("c")</p>
 	@{
 		if(Model.available)
@@ -22,6 +28,4 @@
 			</p>
 		}
 	}
-	<p><a class="btn btn-warning" asp-controller="Products" asp-action="Detail" 
-		asp-route-id="@Model.id">Подробнее</a></p>
 </div>
