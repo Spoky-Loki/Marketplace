@@ -29,11 +29,12 @@ namespace Shop.Controllers
 		{
 			if (ModelState.IsValid) 
 			{
-				User? user = await _context.users.FirstOrDefaultAsync(u => u.Email == model.Email &&
-					u.Password == model.Password);
+				User? user = await _context.users.
+					Include(u => u.Role).
+					FirstOrDefaultAsync(u => u.Email == model.Email &&u.Password == model.Password);
 				if (user != null) 
 				{
-					await Authenticate(model.Email);
+					await Authenticate(user);
 
 					return RedirectToAction("Index", "Home");
 				}
@@ -56,30 +57,37 @@ namespace Shop.Controllers
 			if(ModelState.IsValid)
 			{
 				User? user = await _context.users.FirstOrDefaultAsync(u => u.Email == model.Email);
-				if (user == null)
+
+                if (user == null)
 				{
-					_context.users.Add(new User { Email = model.Email, Password = model.Password });
+                    user = new User { Email = model.Email, Password = model.Password };
+                    Role? userRole = await _context.roles.FirstOrDefaultAsync(r => r.Name == "user");
+                    if (userRole != null)
+                        user.Role = userRole;
+
+                    _context.users.Add(user);
 					await _context.SaveChangesAsync();
 
-					await Authenticate(model.Email);
+					await Authenticate(user);
 
 					return RedirectToAction("Index", "Home");
 				}
 				else
 				{
-					ModelState.AddModelError("", "Пользователь с данной электронной почтой уже зарегистрирован");
+					ModelState.AddModelError("", "Некорректные логин и(или) пароль");
 				}
 			}
 
 			return View(model);
 		}
 
-		private async Task Authenticate(string userName)
+		private async Task Authenticate(User user)
 		{
 			var claims = new List<Claim>
 			{
-				new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
-			};
+				new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
+            };
 
 			ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie",
 				ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);

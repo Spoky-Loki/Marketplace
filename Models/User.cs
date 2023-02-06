@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Shop.Models
@@ -24,5 +25,9 @@ namespace Shop.Models
 		public string Email { get; set; }
 
 		public string Password { get; set; }
-	}
+
+        public int? RoleId { get; set; }
+
+        public Role Role { get; set; }
+    }
 }

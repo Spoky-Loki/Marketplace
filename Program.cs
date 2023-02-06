@@ -28,7 +28,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 				.AddCookie(options => //CookieAuthenticationOptions
 				{
 					options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
-				});
+                    options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                });
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
