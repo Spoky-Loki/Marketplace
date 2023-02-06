@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,13 @@ builder.Services.AddScoped(sp => Cart.GetCart(sp));
 
 builder.Services.AddMemoryCache();
 builder.Services.AddSession();
+
+// Setting the connection configuration
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+				.AddCookie(options => //CookieAuthenticationOptions
+				{
+					options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+				});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -52,6 +60,11 @@ app.UseDeveloperExceptionPage();
 app.UseStatusCodePages();
 
 app.UseSession();
+
+// Authentication
+app.UseAuthentication();
+// Authorization
+app.UseAuthorization();
 
 app.MapControllerRoute(
 	name: "categoryFilter",
