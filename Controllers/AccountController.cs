@@ -18,7 +18,62 @@ namespace Shop.Controllers
 			_context = context;
 		}
 
-		[HttpGet]
+        [HttpGet]
+        public IActionResult Profile()
+        {
+			if (User.Identity.IsAuthenticated)
+			{
+                User? user = _context.users.FirstOrDefault(u => u.Email == User.Claims.First().Value.ToString());
+                ProfileViewModel model = new ProfileViewModel
+                {
+                    Name = user.Name,
+                    Surname = user.Surname,
+                    Address = user.Address,
+                    Phone = user.Phone,
+                    Email = user.Email,
+                };
+
+                return View(model);
+			}
+			else
+				return RedirectToAction("Login");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Profile(ProfileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                User? user = await _context.users.FirstOrDefaultAsync(u => u.Email == model.Email);
+
+                if (user.Password == model.Password)
+                {
+                    user.Name = model.Name;
+					user.Surname = model.Surname;
+					user.Address = model.Address;
+					user.Phone = model.Phone;
+
+					if(model.newEmail != null)
+						user.Email = model.newEmail;
+
+                    if (model.newPassword != null)
+                        user.Password = model.newPassword;
+
+                    _context.users.Update(user);
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction("Profile", "Account");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                }
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
 		public IActionResult Login()
 		{
 			return View();
