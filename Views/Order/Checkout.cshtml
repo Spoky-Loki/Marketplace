@@ -1,8 +1,13 @@
-﻿@model Order
+﻿@{
+    ViewData["Title"] = "Оформление заказа";
+}
+
+@model Order
 
 <div class="row">
 	<h3>Оформление заказа</h3>
 	<form asp-action="Checkout" method="post" class="form-horizontal" >
+		<div class="validation" asp-validation-summary="ModelOnly"></div>
 		<div class="form-group">
 			<label asp-for="name"></label>
 			<div class="col-md-5">

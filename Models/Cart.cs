@@ -27,7 +27,7 @@ namespace Shop.Models
 			return new Cart(context) { cartId = cartId };
 		}
 
-		public void addToCart(Product product)
+		public void AddToCart(Product product)
 		{
 			_context.cartItems.Add(new CartItem { 
 				cartId = cartId, 
@@ -37,7 +37,14 @@ namespace Shop.Models
 			_context.SaveChanges();
 		}
 
-		public List<CartItem> GetCartItems() 
+        public void RemoveFromCart(CartItem item)
+        {
+			_context.cartItems.Remove(item);
+
+            _context.SaveChanges();
+        }
+
+        public List<CartItem> GetCartItems() 
 		{
 			return _context.cartItems.Where(p => p.cartId == cartId).Include(s => s.product).ToList();
 		}

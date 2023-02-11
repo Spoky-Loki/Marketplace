@@ -34,10 +34,22 @@ namespace Shop.Controllers
 
 			if (item != null) 
 			{
-				_cart.addToCart(item);
+				_cart.AddToCart(item);
 			}
 
 			return RedirectToAction("Index");
 		}
-	}
+
+        public RedirectToActionResult RemoveFromCart(int id)
+        {
+            var item = _cart.GetCartItems().FirstOrDefault(i => i.id == id);
+
+            if (item != null)
+            {
+                _cart.RemoveFromCart(item);
+            }
+
+            return RedirectToAction("Index");
+        }
+    }
 }

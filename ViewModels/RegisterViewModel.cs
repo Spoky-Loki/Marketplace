@@ -5,6 +5,7 @@ namespace Shop.ViewModels
 	public class RegisterViewModel
 	{
 		[Required(ErrorMessage = "Не указан Email")]
+		[DataType(DataType.EmailAddress)]
 		public string Email { get; set; }
 
 		[Required(ErrorMessage = "Не указан пароль")]
@@ -12,7 +13,8 @@ namespace Shop.ViewModels
 		public string Password { get; set; }
 
 		[DataType(DataType.Password)]
-		[Compare("Password", ErrorMessage = "Пароль введен неверно")]
+        [Required(ErrorMessage = "Не указан пароль")]
+        [Compare("Password", ErrorMessage = "Пароль введен неверно")]
 		public string ConfirmPassword { get; set; }
 	}
 }

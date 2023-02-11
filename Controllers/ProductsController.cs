@@ -25,6 +25,7 @@ namespace Shop.Controllers
             string productCategory = "";
             if (category.IsNullOrEmpty())
             {
+                ViewBag.Title = "Все продукты";
                 products = _products.products.OrderBy(i => i.id);
             }
             else
@@ -47,6 +48,7 @@ namespace Shop.Controllers
                         OrderBy(i => i.id);
 					productCategory = "Молочные продукты";
 				}
+                ViewBag.Title = productCategory;
             }
 
             ProductsListViewModel model = new ProductsListViewModel {

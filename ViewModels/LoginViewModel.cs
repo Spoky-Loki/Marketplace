@@ -5,7 +5,8 @@ namespace Shop.ViewModels
 	public class LoginViewModel
 	{
 		[Required(ErrorMessage = "Не указан Email")]
-		public string Email { get; set; }
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
 
 		[Required(ErrorMessage = "Не указан пароль")]
 		[DataType(DataType.Password)]

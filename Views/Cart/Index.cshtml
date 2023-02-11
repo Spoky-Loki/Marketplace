@@ -9,7 +9,9 @@
 	{
 		<div class="alert alert-warning mt-3">
 			<b>Продукт:</b> @el.product.name<br />
-			<b>Цена:</b> @el.price.ToString("c")
+			<b>Цена:</b> @el.price.ToString("c")<br />
+			<a class="btn btn-close" asp-controller="Cart" asp-action="RemoveFromCart"
+				asp-route-id="@el.id"></a>
 		</div>
 	}
 	<hr />

@@ -2,25 +2,41 @@
 using Shop.Data;
 using Shop.Data.Interfaces;
 using Shop.Models;
-using System.Diagnostics;
 
 namespace Shop.Controllers
 {
 	public class OrderController : Controller
 	{
+		private readonly ApplicationContext _context;
+
 		private readonly IAllOrders _allOrders;
 
 		private readonly Cart _cart;
 
-		public OrderController(IAllOrders allOrders, Cart cart)
+		public OrderController(IAllOrders allOrders, Cart cart, ApplicationContext context)
 		{
 			_allOrders = allOrders;
 			_cart = cart;
+			_context = context;
 		}
 
 		public ActionResult Checkout() 
 		{
-			return View();
+			if(User.Identity.IsAuthenticated)
+			{
+				User? user = _context.users.FirstOrDefault(u => u.Email == User.Claims.First().Value.ToString());
+				Order model = new Order
+				{
+					name = user.Name,
+					surname = user.Surname,
+					adress = user.Address,
+					phone = user.Phone,
+					email = user.Email,
+				};
+				return View(model);
+			}
+			else
+				return View();
 		}
 
 		[HttpPost]

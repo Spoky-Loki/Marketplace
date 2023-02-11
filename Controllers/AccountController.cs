@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data;
@@ -32,7 +33,6 @@ namespace Shop.Controllers
                     Phone = user.Phone,
                     Email = user.Email,
                 };
-
                 return View(model);
 			}
 			else
@@ -48,14 +48,16 @@ namespace Shop.Controllers
 
                 if (user.Password == model.Password)
                 {
-                    user.Name = model.Name;
-					user.Surname = model.Surname;
-					user.Address = model.Address;
-					user.Phone = model.Phone;
-
-					if(model.newEmail != null)
+					if (model.Name != null)
+						user.Name = model.Name;
+					if (model.Surname != null)
+						user.Surname = model.Surname;
+					if (model.Address != null)
+						user.Address = model.Address;
+					if (model.Phone != null)
+						user.Phone = model.Phone;
+					if (model.newEmail != null)
 						user.Email = model.newEmail;
-
                     if (model.newPassword != null)
                         user.Password = model.newPassword;
 
@@ -69,7 +71,6 @@ namespace Shop.Controllers
                     ModelState.AddModelError("", "Некорректные логин и(или) пароль");
                 }
             }
-
             return View(model);
         }
 
@@ -132,7 +133,6 @@ namespace Shop.Controllers
 					ModelState.AddModelError("", "Некорректные логин и(или) пароль");
 				}
 			}
-
 			return View(model);
 		}
 
