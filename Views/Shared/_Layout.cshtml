@@ -53,6 +53,12 @@
                                 <li class="nav-item me-auto">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Выход</a>
                                 </li>
+                                if (User.IsInRole("admin"))
+                                {
+                                    <li class="nav-item me-auto">
+                                        <a class="nav-link text-dark" href="coreadmin">Админ панель</a>
+                                    </li>
+                                }
                             }
                             else
                             {
